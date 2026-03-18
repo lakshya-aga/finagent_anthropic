@@ -1,0 +1,91 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "lakshya-qai"
+version = "0.1.0"
+description = "Agentic AI ecosystem for quantitative finance"
+requires-python = ">=3.10"
+dependencies = [
+    # Agent framework
+    "claude-agent-sdk>=0.1.0",
+
+    # MCP protocol
+    "mcp>=1.0.0",
+
+    # PDF extraction pipeline
+    "grobid-client-python>=0.0.7",
+    "docling>=2.0.0",
+    "nougat-ocr>=0.1.0",
+
+    # Vector store & embeddings
+    "chromadb>=0.5.0",
+    "anthropic>=0.40.0",
+
+    # Code-RAG fallback (TF-IDF)
+    "scikit-learn>=1.4.0",
+
+    # Signal API
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "starlette>=0.37.0",
+
+    # Data sources (findata)
+    "yfinance>=0.2.40",
+    "pandas>=2.2.0",
+    "numpy>=1.26.0",
+
+    # mlfinlab dependencies
+    "scipy>=1.12.0",
+    "matplotlib>=3.8.0",
+    "plotly>=5.20.0",
+    "numba>=0.59.0",
+    "pandas-datareader>=0.10.0",
+
+    # Notebook manipulation
+    "nbformat>=5.10.0",
+    "nbconvert>=7.16.0",
+    "jupyter-client>=8.6.0",
+    "ipykernel>=6.29.0",
+
+    # Utilities
+    "pydantic>=2.8.0",
+    "pydantic-settings>=2.4.0",
+    "httpx>=0.27.0",
+    "rich>=13.7.0",
+    "gitpython>=3.1.43",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+    "ruff>=0.5.0",
+]
+bloomberg = [
+    "blpapi>=3.24.0",
+]
+excel = [
+    "openpyxl>=3.1.0",
+]
+parquet = [
+    "pyarrow>=15.0.0",
+]
+
+[project.scripts]
+qai = "lakshya_qai.main:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["lakshya_qai"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
