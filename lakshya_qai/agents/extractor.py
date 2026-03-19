@@ -53,7 +53,7 @@ Signal name: {signal_name}
 Output file: {output_path}
 
 ## Notebook Contents:
-{'\\n'.join(notebook_content)}
+{chr(10).join(notebook_content)}
 
 ## Requirements:
 1. Create a Signal subclass at {output_path}

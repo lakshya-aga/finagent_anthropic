@@ -17,15 +17,15 @@ except ImportError:
     _CHROMA_AVAILABLE = False
 
 try:
-    import anthropic as _anthropic
-    _ANTHROPIC_AVAILABLE = True
+    import voyageai as _voyageai
+    _VOYAGE_AVAILABLE = True
 except ImportError:
-    _ANTHROPIC_AVAILABLE = False
+    _VOYAGE_AVAILABLE = False
 
 from lakshya_qai.mcps.code_rag_parser import ParsedUnit
 
 COLLECTION_NAME = "code_units"
-EMBED_MODEL = "voyage-code-3"  # Anthropic's code embedding model via voyage
+EMBED_MODEL = "voyage-code-3"  # Voyage AI's code embedding model
 
 
 class CodeVectorStore:
@@ -46,15 +46,15 @@ class CodeVectorStore:
         Initialise the vector store.
 
         :param persist_dir: (str) Directory where ChromaDB persists data.
-        :param api_key: (str | None) Anthropic API key (or set ANTHROPIC_API_KEY).
+        :param api_key: (str | None) Voyage AI API key (or set VOYAGE_API_KEY).
         """
         if not _CHROMA_AVAILABLE:
             raise ImportError("pip install chromadb")
-        if not _ANTHROPIC_AVAILABLE:
-            raise ImportError("pip install anthropic")
+        if not _VOYAGE_AVAILABLE:
+            raise ImportError("pip install voyageai")
 
-        self._client_api = _anthropic.Anthropic(
-            api_key=api_key or os.environ.get("ANTHROPIC_API_KEY")
+        self._voyage = _voyageai.Client(
+            api_key=api_key or os.environ.get("VOYAGE_API_KEY")
         )
         self._db = chromadb.PersistentClient(
             path=persist_dir,
@@ -66,18 +66,9 @@ class CodeVectorStore:
         )
 
     def _embed(self, texts: list[str]) -> list[list[float]]:
-        """Embed a batch of texts using Anthropic's embedding API."""
-        # Anthropic uses the voyage-* models for embeddings
-        response = self._client_api.beta.messages.batches  # placeholder
-        # Use the messages.create with embeddings endpoint
-        # Note: Anthropic embedding API via voyage integration
-        import anthropic
-        client = anthropic.Anthropic()
-        result = client.beta.embeddings.create(
-            model=EMBED_MODEL,
-            input=texts,
-        )
-        return [item.embedding for item in result.data]
+        """Embed a batch of texts using Voyage AI's code embedding model."""
+        result = self._voyage.embed(texts, model=EMBED_MODEL, input_type="document")
+        return result.embeddings
 
     def upsert(self, units: list[ParsedUnit], batch_size: int = 50) -> int:
         """

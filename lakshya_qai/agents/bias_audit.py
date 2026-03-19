@@ -47,7 +47,7 @@ async def audit_for_bias(
 Audit the following research notebook and signal module for statistical biases.
 
 ## Research Notebook: {notebook_path.name}
-{'\\n'.join(notebook_content)}
+{chr(10).join(notebook_content)}
 
 ## Extracted Signal Module: {signal_module_path.name}
 ```python

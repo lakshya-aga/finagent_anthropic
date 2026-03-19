@@ -22,6 +22,7 @@ dependencies = [
     # Vector store & embeddings
     "chromadb>=0.5.0",
     "anthropic>=0.40.0",
+    "voyageai>=0.3.0",
 
     # Code-RAG fallback (TF-IDF)
     "scikit-learn>=1.4.0",
