@@ -194,7 +194,7 @@ async def build_notebook(
     gp_dir = settings.good_practices_dir
     if gp_dir.exists():
         for md_file in gp_dir.glob("*.md"):
-            good_practices += f"\n### {md_file.stem}\n{md_file.read_text()}\n"
+            good_practices += f"\n### {md_file.stem}\n{md_file.read_text(encoding='utf-8')}\n"
 
     prompt = f"""
 Build a Jupyter notebook following this plan:

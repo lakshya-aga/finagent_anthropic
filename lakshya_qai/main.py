@@ -58,6 +58,11 @@ def main() -> None:
     api_parser.add_argument("--host", default="0.0.0.0", help="API host")
     api_parser.add_argument("--port", type=int, default=8000, help="API port")
 
+    # ── traces command ─────────────────────────────────────────
+    traces_parser = subparsers.add_parser("traces", help="Open the agent trace viewer in browser")
+    traces_parser.add_argument("--host", default="127.0.0.1", help="Trace viewer host")
+    traces_parser.add_argument("--port", type=int, default=8050, help="Trace viewer port")
+
     args = parser.parse_args()
     setup_logging(verbose=args.verbose)
 
@@ -102,6 +107,15 @@ def main() -> None:
 
         import uvicorn
 
+        uvicorn.run(app, host=args.host, port=args.port)
+
+    elif args.command == "traces":
+        from lakshya_qai.trace_viewer import create_app
+
+        import uvicorn
+
+        app = create_app()
+        console.print(f"[bold cyan]Trace viewer at http://{args.host}:{args.port}[/bold cyan]")
         uvicorn.run(app, host=args.host, port=args.port)
 
 

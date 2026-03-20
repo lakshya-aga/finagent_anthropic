@@ -6,6 +6,12 @@
       "runtimeExecutable": "python",
       "runtimeArgs": ["-m", "lakshya_qai.main", "api", "--host", "127.0.0.1", "--port", "8000"],
       "port": 8000
+    },
+    {
+      "name": "trace-viewer",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "lakshya_qai.trace_viewer", "--host", "127.0.0.1", "--port", "8050"],
+      "port": 8050
     }
   ]
 }
