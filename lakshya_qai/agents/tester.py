@@ -189,9 +189,10 @@ You can install_package if imports fail.
             },
             allowed_tools=[
                 "mcp__tools__search_tools",
-                "mcp__tools__get_tool_details",
+                "mcp__tools__get_unit_source",
+                "mcp__tools__get_module_summary",
                 "mcp__data__search_data_sources",
-                "mcp__data__get_data_source_details",
+                "mcp__data__get_data_source_doc",
                 "mcp__test__run_notebook",
                 "mcp__test__install_package",
                 "mcp__test__write_cell",
